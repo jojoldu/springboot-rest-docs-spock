@@ -1,4 +1,4 @@
-package com.jojoldu.spring.restdocs.api;
+package com.jojoldu.spring.restdocs;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

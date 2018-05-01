@@ -12,7 +12,6 @@ asciidoctor {
     dependsOn test
 }
 
-
 jar {
     dependsOn asciidoctor
     from ("${asciidoctor.outputDir}/html5") {
@@ -24,11 +23,12 @@ dependencies {
     compile project(":restdocs-core")
 
     compile('org.springframework.boot:spring-boot-starter-web')
-    compileOnly('org.projectlombok:lombok')
 
+    // rest assured & asciidoc
     compile('org.springframework.restdocs:spring-restdocs-restassured')
+    asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor:2.0.1.RELEASE'
+
     testCompile('io.rest-assured:rest-assured:3.0.2') // for rest assured
     testCompile('org.springframework.restdocs:spring-restdocs-restassured') // for rest assured
 
-    asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor:2.0.1.RELEASE'
 }

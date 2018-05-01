@@ -1,4 +1,4 @@
-package com.jojoldu.spring.restdocs.api;
+package com.jojoldu.spring.restdocs;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
