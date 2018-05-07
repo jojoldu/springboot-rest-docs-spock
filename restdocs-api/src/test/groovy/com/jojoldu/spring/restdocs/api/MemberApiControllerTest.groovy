@@ -46,7 +46,7 @@ class MemberApiControllerTest extends Specification {
     def "HelloWorld테스트"() {
         expect:
         given(this.spec)
-                .accept("application/json")
+                .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
                 .filter(document("hello-world",
                 preprocessRequest(modifyUris()
@@ -59,9 +59,10 @@ class MemberApiControllerTest extends Specification {
                         parameterWithName("name").description("이름")
                 ),
                 responseFields(
-                        fieldWithPath("").type(JsonFieldType.NUMBER).description("인사 메세지")
+                        fieldWithPath("greeting").type(JsonFieldType.STRING).description("인사 메세지")
                 )))
+                .param("name", "jojoldu")
                 .when().port(this.port).get("/hello")
-                .then().assertThat().statusCode(is(200));
+                .then().assertThat().statusCode(is(200))
     }
 }

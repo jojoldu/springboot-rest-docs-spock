@@ -1,0 +1,82 @@
+= Rest Docs Sample API Document
+jojoldu.tistory.com
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+:sectlinks:
+
+[[introduction]]
+== 소개
+
+창천향로 Spring Rest Docs API
+
+[[common]]
+== 공통 사항
+
+API에 관계없이 아래 사항을 지켜주셔야 합니다.
+
+=== Domain
+
+|===
+| 환경 | domain
+
+| 개발서버
+| `dev.jojoldu.tistory.com`
+
+| 운영서버
+| `jojoldu.tistory.com`
+|===
+
+
+=== Header
+
+|===
+| name | 설명
+
+| `Authorization`
+| API를 사용하기 위한 인증 키
+|===
+
+=== 공통 Response Body
+
+|===
+| field | 설명
+
+| `code`
+| 응답 코드
+
+| `message`
+| 예외사항 내용 등 응답 메세지
+
+| `data`
+| 실제 반환될 데이터
+|===
+
+[[hello]]
+== Hello World API
+
+=== Request
+
+CURL:
+
+include::{snippets}/hello-world/curl-request.adoc[]
+
+Request Parameters:
+
+include::{snippets}/hello-world/request-parameters.adoc[]
+
+Request HTTP Example:
+
+include::{snippets}/hello-world/http-request.adoc[]
+
+=== Response
+
+Response Fields:
+
+include::{snippets}/hello-world/response-fields.adoc[]
+
+Response HTTP Example:
+
+include::{snippets}/hello-world/http-response.adoc[]
