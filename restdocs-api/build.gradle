@@ -12,11 +12,15 @@ asciidoctor {
     dependsOn test
 }
 
-jar {
+task copyDocument(type: Copy) {
     dependsOn asciidoctor
-    from ("${asciidoctor.outputDir}/html5") {
-        into 'static/docs'
-    }
+
+    from file("build/asciidoc/html5/")
+    into file("src/main/resources/static/docs")
+}
+
+build {
+    dependsOn copyDocument
 }
 
 dependencies {

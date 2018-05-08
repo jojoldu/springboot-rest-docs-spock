@@ -81,7 +81,20 @@ Spring Rest Docs를 사용할 모듈 (여기서는 restdocs-api)에서만 관련
 
 ## 2. Spring Rest Docs 설정
 
+Rest Docs 관련된 설정을 추가해보겠습니다.  
+해당 설정은 Root프로젝트의 build.gradle이 아닌, **문서가 제공될 restdocs-api에서만** 추가하면 됩니다.  
+그래서 아래와 같이 restdocs-api의 build.gradle에만 설정을 추가하겠습니다.
+
+![api-gradle](./images/api-gradle.png)
+
+> 하위 모듈이 모두 문서가 필요하면 Root 프로젝트의 build.gradle에 넣으시면 됩니다.  
+만약 하위 모듈 중 몇개만 쓰고 싶으시다면 ```configure``` 기능을 사용하시면 됩니다.  
+[참고](https://docs.gradle.org/current/userguide/multi_project_builds.html)
+
+build.gradle의 전체 코드는 아래와 같습니다.
+
 ```groovy
+
 plugins {
     id "org.asciidoctor.convert" version "1.5.3"
 }
@@ -95,11 +108,15 @@ asciidoctor {
     dependsOn test
 }
 
-jar {
+task copyDocument(type: Copy) {
     dependsOn asciidoctor
-    from ("${asciidoctor.outputDir}/html5") {
-        into 'static/docs'
-    }
+
+    from file("build/asciidoc/html5/")
+    into file("src/main/resources/static/docs")
+}
+
+build {
+    dependsOn copyDocument
 }
 
 dependencies {
@@ -118,13 +135,141 @@ dependencies {
 
 ```
 
+여기서 ```./gradlew build``` 혹은 ```gradle build```등으로 build가 수행될때의 Task 순서는 ```test``` -> ```asciidoctor``` -> ```copyDocument``` -> ```build``` 가 됩니다.
+
+* ```build``` 호출
+* ```build```가 ```copyDocument``` Task에 의존(```dependsOn```)하고 있어 ```copyDocument```가 먼저 수행
+* ```copyDocument``` 호출
+* ```copyDocument```가 ```asciidoctor```에 의존하고 있어 ```asciidoctor``` 호출
+* ```asciidoctor``` 호출
+* ```asciidoctor```가 ```test```에 의존하고 있어 ```test``` 호출
+
+> Gradle에서 ```dependsOn```은 지정된 Task가 먼저 수행되어야 함을 의미합니다.  
+예를 들어 ```dependsOn A``` 라고 되어있으면 A Task가 수행되어야만 원래 Task가 수행됩니다.
+
+자 여기서 ```copyDocument```가 하는 일은 간단합니다.  
+Rest Docs로 문서(html)가 만들어지면 ```build/asciidoc/html5/```에 생성되는데요.  
+생성된 문서를 ```src/main/resources/static/docs```로 복사하는 것입니다.  
+  
+스프링부트는 ```src/main/resources/static/``` 아래에 있는 정적 파일(html/css/js/image)는 자동으로 호스팅해줍니다.  
+  
+예를 들어 ```src/main/resources/static/docs/index.html```이 있다면, **localhost:8080/docs/index.html 혹은 도메인/docs/index.html로 접속하면 문서를 볼수있게 됩니다**.  
+  
+Rest Docs 설정도 끝났습니다!  
+이제는 실제로 테스트 코드를 한번 작성해보겠습니다.
+
 ## 3. 테스트 코드 작성
 
-## 4. 결과
+일단 간단한 Controller를 생성하겠습니다.
+
+> Rest Docs는 Controller 테스트 코드를 기반으로 문서를 생성합니다.  
+
+```java
+@RestController
+public class MemberApiController {
+
+    @GetMapping("/hello")
+    public Hello helloWorld(@RequestParam String name){
+        return new Hello("Hello World "+name);
+    }
+
+    @PostMapping("/member")
+    public Member saveMember(@RequestBody Member member){
+        return member;
+    }
+
+    @Getter
+    public static class Hello {
+        String greeting;
+
+        public Hello(String greeting) {
+            this.greeting = greeting;
+        }
+    }
+}
+```
+
+> Member 클래스는 restdocs-core 모듈에서 관리하는 엔티티(Entity) 클래스입니다.  
+**restdocs-api가 core 의존성**(```compile project(":restdocs-core")```)을 갖고 있기 때문에 바로 호출해서 사용할 수 있습니다.
+
+그리고 이 Controller를 테스트하는 코드를 생성합니다.  
+  
+> 참고로 저는 Spock & Rest Assured 기반입니다.  
+만약 Junit, MockMVC를 사용하신다면 [공식 샘플](https://github.com/spring-projects/spring-restdocs/tree/v2.0.1.RELEASE/samples)을 참고해보세요
+
+```groovy
+import static io.restassured.RestAssured.given
+import static org.hamcrest.CoreMatchers.is
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName
+import static org.springframework.restdocs.request.RequestDocumentation.requestParameters
+import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document
+import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.documentationConfiguration
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class MemberApiControllerTest extends Specification {
+
+    @Rule
+    public JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation()
+
+    private RequestSpecification spec
+
+    @LocalServerPort
+    private int port
+
+    void setup() {
+        this.spec = new RequestSpecBuilder()
+                .addFilter(documentationConfiguration(this.restDocumentation))
+                .build()
+    }
+
+    def "HelloWorld테스트"() {
+        expect:
+        given(this.spec)
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .filter(document("hello-world",
+                preprocessRequest(modifyUris()
+                        .scheme("https")
+                        .host("jojoldu.tistory.com")
+                        .removePort(),
+                        prettyPrint()),
+                preprocessResponse(prettyPrint()),
+                requestParameters(
+                        parameterWithName("name").description("이름")
+                ),
+                responseFields(
+                        fieldWithPath("greeting").type(JsonFieldType.STRING).description("인사 메세지")
+                )))
+                .param("name", "jojoldu")
+                .when().port(this.port).get("/hello")
+                .then().assertThat().statusCode(is(200))
+    }
+}
+```
+
+코드를 하나씩 설명드리겠습니다.
+
+![doc1](./images/doc1.png)
+
+* ```@Rule public JUnitRestDocumentation restDocumentation```
+  * 자동 생성될 문서들의 Root 디렉토리를 지정합니다.
+  * 기본값으로 Maven은 ```target/generated-snippets```, Gradle은 ```build/generated-snippets```으로 지정되어있습니다.
+  * 각 문서들은 위 설정된 Root 디렉토리의 **하위 디렉토리에** 자동생성됩니다.
+* ```private RequestSpecification spec```
+  * Spock의 모든 Request 요청이 ```restDocumentation```이 적용된채로 진행되도록 설정합니다.
+* ```hello-world```
+  * ```restDocumentation```로 지정된 디렉토리에 해당 테스트 코드로 생성되는 모든 문서를  ```hello-world```디렉토리에 생성합니다.
+
+## 4. 문서 생성
+
+## 5. 결과
 
 ![result](./images/result.png)
 
-## 5. Tip
+## 6. Tip
 
 ### Plugin
 
