@@ -2,13 +2,19 @@
 
 [지난 시간](http://jojoldu.tistory.com/289)에 이어 이번시간에는 Markdown이 아닌 Asciidoc으로 Spring Rest Docs를 진행하는 과정을 기록합니다.  
   
-> 단일 프로젝트에서 기본 버전 (MockMVC + Junit4) 적용 방법은 [레퍼런스 번역](http://springboot.tistory.com/26)을 참고하시면 됩니다.
+Spring Rest Docs의 asciidoc 버전은 실제 Spring 프로젝트의 문서로 사용되고 있습니다.
+
+![example](./images/example.png)
+
+([링크](https://docs.spring.io/spring-restdocs/docs/current/reference/html5/))
 
 여기서는 Spring Rest Docs + Spock + Rest Assured를 조합으로 진행할 예정입니다.  
 (저희팀 프로젝트 스펙이라서요..)  
-  
+
 [Gradle Muliti Module](http://jojoldu.tistory.com/123)의 경우 요즘 많은 프로젝트에서 사용하고 있으니 여기서도 마찬가지로 적용된걸 가정하고 진행합니다.  
-  
+
+> 단일 프로젝트에서 기본 버전 (MockMVC + Junit4) 적용 방법은 [레퍼런스 번역](http://springboot.tistory.com/26)을 참고하시면 됩니다.
+>   
 모든 코드는 [Github](https://github.com/jojoldu/springboot-rest-docs-spock)에 있으니 참고하시면 될것 같습니다.
 
 ## 1. Gradle Multi Module 구성
@@ -273,16 +279,152 @@ class MemberApiControllerTest extends Specification {
 * ```responseFields(fieldWithPath())```
   * response-fields asciidoc 파일을 생성합니다.
 
-여기서 주의하실점은 ```requestParameters```, ```requestFields```, ```responseFields```는 누락되는 필드가 있거나, 테스트용 데이터가 Null인데 ```.type(JsonFieldType.STRING)``` 으로 선언하면 바로 테스트가 깨집니다.  
+여기서 주의하실점은 ```requestParameters```, ```requestFields```, ```responseFields```는 누락되는 필드가 있거나, 테스트용 데이터에 null을 추가한채로 ```.type(JsonFieldType.STRING)``` 으로 선언하면 바로 테스트가 깨집니다.  
+  
+자 이렇게만 하고 ```./gradlew build```를 수행해보시면!
 
+![build](./images/build.png)
+
+테스트 코드로 생성된 asciidoc (```.adoc```) 파일들이 생성된 걸 확인할 수 있습니다!  
+자 그럼 이렇게 생성한 asciidoc 파일들을 문서에 포함시켜서 생성해보겠습니다.
 
 ## 4. 문서 생성
 
+**src/main/docs/asciidoc** 디렉토리를 생성하신뒤, ```index.adoc``` 파일을 생성합니다.
+
+![index-adoc](./images/index-adoc.png)
+
+index.adoc 파일에 문서 내용을 작성하시면 됩니다.  
+아래는 제가 작성한 asciidoc 문서 샘플입니다.
+
+```asciidoc
+= Rest Docs Sample API Document
+jojoldu.tistory.com
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+:sectlinks:
+
+[[introduction]]
+== 소개
+
+창천향로 Spring Rest Docs API
+
+[[common]]
+== 공통 사항
+
+API에 관계없이 아래 사항을 지켜주셔야 합니다.
+
+=== Domain
+
+|===
+| 환경 | domain
+
+| 개발서버
+| `dev.jojoldu.tistory.com`
+
+| 운영서버
+| `jojoldu.tistory.com`
+|===
+
+
+=== Header
+
+|===
+| name | 설명
+
+| `Authorization`
+| API를 사용하기 위한 인증 키
+|===
+
+=== 공통 Response Body
+
+|===
+| field | 설명
+
+| `code`
+| 응답 코드
+
+| `message`
+| 예외사항 내용 등 응답 메세지
+
+| `data`
+| 실제 반환될 데이터
+|===
+
+[[hello]]
+== Hello World API
+
+=== Request
+
+CURL:
+
+include::{snippets}/hello-world/curl-request.adoc[]
+
+Request Parameters:
+
+include::{snippets}/hello-world/request-parameters.adoc[]
+
+Request HTTP Example:
+
+include::{snippets}/hello-world/http-request.adoc[]
+
+=== Response
+
+Response Fields:
+
+include::{snippets}/hello-world/response-fields.adoc[]
+
+Response HTTP Example:
+
+include::{snippets}/hello-world/http-response.adoc[]
+
+```
+
+* ```:source-highlighter: highlightjs```
+  * 문서에 표기되는 코드들의 하이라이팅을 highlightjs를 사용합니다.
+* ```:toc: left```
+  * toc (Table Of Contents)를 문서의 좌측에 둡니다.
+* ```=```, ```==```, ```===```
+  * Markdown의 ```#```과 동일합니다.
+  * ```<h1>```, ```<h2>```, ```<h3>``` 등의 효과를 줍니다.
+* ```[[텍스트]]```
+  * 해당 텍스트에 ```#``` 태그를 부여합니다.
+  * 링크가 걸리는것이라 보시면 됩니다.
+* ```include::{snippets}/hello-world/XXX.adoc[]```
+  * **Markdown을 포기하고 asciidoc으로 옮기게 된 결정적인 이유**인 include입니다.
+  * 다른 asciidoc 파일을 해당 위치로 불러 옵니다.
+  * ```{snippets}```은 각각의 build 상황에 맞게 자동 지정됩니다.
+
+> 주의!  
+최상단의 ```= Rest Docs Sample API Document```, ```jojoldu.tistory.com```, ```:doctype: book``` 3라인 사이는 공란이 포함되어있으면 설정값이 먹히지 않습니다.  
+(toc가 생성되지 않거나, highlight.js가 안먹히거나 하는 등)  
+
+inddex.adoc 까지 모두 설정되었습니다!  
+
 ## 5. 결과
 
-![result](./images/result.png)
+모든 설정이 완료 되었으니 Build를 수행해보겠습니다.
+
+![last1](./images/last1.png)
+
+그럼 ```build/asciidoc/html5/index.html``` 과 ```src/main/resources/static/docs/index.html```이 추가된걸 볼 수 있습니다.  
+
+![last2](./images/last2.png)
+
+여기서 바로 html파일을 열어서 볼 수도 있는데요.  
+실제 배포 서버에서 어떻게 보는지 확인도 할겸 spring boot를 실행해서 확인해봅니다.
+프로젝트 실행시키신 뒤 ```localhost:8080/docs/index.html```로 접근해보시면!
+
+![last3](./images/last3.png)
+
+깔끔하게 문서가 생성되고 제공되는 걸 확인할 수 있습니다!
 
 ## 6. Tip
+
+아래는 Spring Rest Docs를 사용하는데 도움이 될만한 팁들입니다.
 
 ### Plugin
 
@@ -292,9 +434,13 @@ IntelliJ를 기준으로는 다음과 같이 Asciidoc 플러그인이 제공됩�
 
 ![plugin2](./images/plugin2.png)
 
+기본적인 incldue는 정상작동하지 않지만, 그외 나머지 Asciidoc 내용의 미리보기가 지원되니 테스트 코드 외 나머지 내용들은 모두 해당 플러그인으로 함께 보면서 진행하시는걸 추천드립니다.
+
 > VS Code 등 다른 에디터에서도 플러그인이 제공됩니다.
 
 ### 문서 생성 목록
+
+Spring Rest Docs 테스트 코드에 별다른 코드를 추가하지 않는 경우에 자동 생성되는 asciidoc 파일들은 좌측이고, ```requestParameters```, ```requestFields```, ```responseFields``` 등등을 테스트 코드에 추가함으로 생성되는 asciidoc 은 우측입니다.
 
 | 기본 생성             | 테스트코드에 따라 추가 생성    |
 |---------------------|-------------------------|
@@ -304,3 +450,10 @@ IntelliJ를 기준으로는 다음과 같이 Asciidoc 플러그인이 제공됩�
 | http-response.adoc  | path-parameters.adoc    |
 | request body        | request-parts.adoc      |
 | response body       |                         |
+
+
+
+### 참고 내용
+
+* [공식 샘플 코드](https://github.com/spring-projects/spring-restdocs/tree/v2.0.1.RELEASE/samples)
+* [공식 문서](https://docs.spring.io/spring-restdocs/docs/current/reference/html5/#customizing-requests-and-responses)
