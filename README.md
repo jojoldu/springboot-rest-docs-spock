@@ -262,6 +262,19 @@ class MemberApiControllerTest extends Specification {
   * Spock의 모든 Request 요청이 ```restDocumentation```이 적용된채로 진행되도록 설정합니다.
 * ```hello-world```
   * ```restDocumentation```로 지정된 디렉토리에 해당 테스트 코드로 생성되는 모든 문서를  ```hello-world```디렉토리에 생성합니다.
+  * 즉 ```"HelloWorld테스트"``` 테스트로 생성되는 모든 asciidoc 파일들은 ```build/generated-snippets/hello-world``` 에 생성됩니다.
+* ```modifyUris().scheme().host().removePort()```
+  * curl-request, http-request, httpie-request등의 asciidoc 파일에서 예시로 나오는 호스트의 주소를 변조해줍니다.
+  * 여기서는 ```https://jojoldu.tistory.com```으로 호출하면 되는것으로 API 문서들이 변경됩니다.
+* ```requestParameters(parameterWithName())```
+  * request-parameters asciidoc 파일을 생성합니다.
+  * **get 요청시 사용할 RequestParam** 선언부를 정의할때 사용하며
+  * **post 요청시 사용할 RequestBody** 선언부를 정의할때는 ```requestFields(fieldWithPath())```를 사용합니다.
+* ```responseFields(fieldWithPath())```
+  * response-fields asciidoc 파일을 생성합니다.
+
+여기서 주의하실점은 ```requestParameters```, ```requestFields```, ```responseFields```는 누락되는 필드가 있거나, 테스트용 데이터가 Null인데 ```.type(JsonFieldType.STRING)``` 으로 선언하면 바로 테스트가 깨집니다.  
+
 
 ## 4. 문서 생성
 
