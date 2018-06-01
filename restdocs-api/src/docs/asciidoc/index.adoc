@@ -1,3 +1,6 @@
+ifndef::snippets[]
+:snippets: ../../../build/generated-snippets
+endif::[]
 = Rest Docs Sample API Document
 jojoldu.tistory.com
 :doctype: book
