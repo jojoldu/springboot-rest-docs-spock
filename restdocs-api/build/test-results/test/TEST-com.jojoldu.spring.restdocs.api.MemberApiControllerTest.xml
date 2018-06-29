@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.jojoldu.spring.restdocs.api.MemberApiControllerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-05-09T23:31:17" hostname="jojolduui-MacBook-Pro.local" time="3.85">
+  <properties/>
+  <testcase name="HelloWorld테스트" classname="com.jojoldu.spring.restdocs.api.MemberApiControllerTest" time="3.85"/>
+  <system-out><![CDATA[2018-05-10 08:31:17.374  INFO 76447 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.jojoldu.spring.restdocs.api.MemberApiControllerTest], using SpringBootContextLoader
+2018-05-10 08:31:17.375  INFO 76447 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [com.jojoldu.spring.restdocs.api.MemberApiControllerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2018-05-10 08:31:17.376  INFO 76447 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.jojoldu.spring.restdocs.api.MemberApiControllerTest]: MemberApiControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2018-05-10 08:31:17.394  INFO 76447 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.jojoldu.spring.restdocs.ApiApplication for test class com.jojoldu.spring.restdocs.api.MemberApiControllerTest
+2018-05-10 08:31:17.396  INFO 76447 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+2018-05-10 08:31:17.397  INFO 76447 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@7069df25, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@23f5d32b, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@262b84d5, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@59dd79f5, org.springframework.test.context.support.DirtiesContextTestExecutionListener@6773051c, org.springframework.test.context.transaction.TransactionalTestExecutionListener@6a92fe52, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@10e5d2f9, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@22c513c1, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@5de1a960, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@207cace0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@1e30d00c, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@14618310]
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.0.1.RELEASE)
+
+2018-05-10 08:31:17.481  INFO 76447 --- [    Test worker] c.j.s.r.api.MemberApiControllerTest      : Starting MemberApiControllerTest on jojolduui-MacBook-Pro.local with PID 76447 (/Users/jojoldu/Documents/git/springboot-rest-docs-spock/restdocs-api/build/classes/groovy/test started by jojoldu in /Users/jojoldu/Documents/git/springboot-rest-docs-spock/restdocs-api)
+2018-05-10 08:31:17.482  INFO 76447 --- [    Test worker] c.j.s.r.api.MemberApiControllerTest      : No active profile set, falling back to default profiles: default
+2018-05-10 08:31:17.485  INFO 76447 --- [    Test worker] ConfigServletWebServerApplicationContext : Refreshing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@6f2d0c2a: startup date [Thu May 10 08:31:17 KST 2018]; root of context hierarchy
+2018-05-10 08:31:18.074  INFO 76447 --- [    Test worker] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$9acb7765] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2018-05-10 08:31:18.346  INFO 76447 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
+2018-05-10 08:31:18.386  INFO 76447 --- [    Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2018-05-10 08:31:18.387  INFO 76447 --- [    Test worker] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.29
+2018-05-10 08:31:18.401  INFO 76447 --- [ost-startStop-1] o.a.catalina.core.AprLifecycleListener   : The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [/Users/jojoldu/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.]
+2018-05-10 08:31:18.523  INFO 76447 --- [ost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2018-05-10 08:31:18.523  INFO 76447 --- [ost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1038 ms
+2018-05-10 08:31:18.632  INFO 76447 --- [ost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Servlet dispatcherServlet mapped to [/]
+2018-05-10 08:31:18.638  INFO 76447 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2018-05-10 08:31:18.639  INFO 76447 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2018-05-10 08:31:18.639  INFO 76447 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2018-05-10 08:31:18.639  INFO 76447 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2018-05-10 08:31:18.746  INFO 76447 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2018-05-10 08:31:18.747  INFO 76447 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2018-05-10 08:31:18.762  INFO 76447 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Building JPA container EntityManagerFactory for persistence unit 'default'
+2018-05-10 08:31:18.762  INFO 76447 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2018-05-10 08:31:18.767  INFO 76447 --- [    Test worker] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2018-05-10 08:31:18.795  INFO 76447 --- [    Test worker] o.h.t.schema.internal.SchemaCreatorImpl  : HHH000476: Executing import script 'org.hibernate.tool.schema.internal.exec.ScriptSourceInputNonExistentImpl@2201839f'
+2018-05-10 08:31:18.795  INFO 76447 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2018-05-10 08:31:18.855  INFO 76447 --- [    Test worker] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-05-10 08:31:19.000  INFO 76447 --- [    Test worker] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@6f2d0c2a: startup date [Thu May 10 08:31:17 KST 2018]; root of context hierarchy
+2018-05-10 08:31:19.006  WARN 76447 --- [    Test worker] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2018-05-10 08:31:19.028  INFO 76447 --- [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/hello],methods=[GET]}" onto public com.jojoldu.spring.restdocs.api.MemberApiController$Hello com.jojoldu.spring.restdocs.api.MemberApiController.helloWorld(java.lang.String)
+2018-05-10 08:31:19.029  INFO 76447 --- [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/member],methods=[POST]}" onto public com.jojoldu.spring.restdocs.core.domain.Member com.jojoldu.spring.restdocs.api.MemberApiController.saveMember(com.jojoldu.spring.restdocs.core.domain.Member)
+2018-05-10 08:31:19.030  INFO 76447 --- [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2018-05-10 08:31:19.031  INFO 76447 --- [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2018-05-10 08:31:19.056  INFO 76447 --- [    Test worker] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-05-10 08:31:19.056  INFO 76447 --- [    Test worker] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-05-10 08:31:19.708  INFO 76447 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 61765 (http) with context path ''
+2018-05-10 08:31:19.709  INFO 76447 --- [    Test worker] c.j.s.r.api.MemberApiControllerTest      : Started MemberApiControllerTest in 2.274 seconds (JVM running for 10.236)
+2018-05-10 08:31:20.804  INFO 76447 --- [o-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring FrameworkServlet 'dispatcherServlet'
+2018-05-10 08:31:20.804  INFO 76447 --- [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization started
+2018-05-10 08:31:20.832  INFO 76447 --- [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization completed in 28 ms
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

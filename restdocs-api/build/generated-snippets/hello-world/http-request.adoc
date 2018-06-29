@@ -1,0 +1,8 @@
+[source,http,options="nowrap"]
+----
+GET /hello?name=jojoldu HTTP/1.1
+Accept: application/json, application/javascript, text/javascript
+Content-Type: application/json; charset=UTF-8
+Host: jojoldu.tistory.com
+
+----

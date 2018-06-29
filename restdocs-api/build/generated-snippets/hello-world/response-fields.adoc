@@ -1,0 +1,8 @@
+|===
+|Path|Type|Description
+
+|`+greeting+`
+|`+String+`
+|인사 메세지
+
+|===

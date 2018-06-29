@@ -1,0 +1,6 @@
+[source,bash]
+----
+$ http GET 'https://jojoldu.tistory.com/hello?name=jojoldu' \
+    'Accept:application/json, application/javascript, text/javascript' \
+    'Content-Type:application/json; charset=UTF-8'
+----

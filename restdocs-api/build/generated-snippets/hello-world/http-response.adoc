@@ -1,0 +1,12 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Wed, 09 May 2018 23:31:21 GMT
+Content-Length: 40
+
+{
+  "greeting" : "Hello World jojoldu"
+}
+----

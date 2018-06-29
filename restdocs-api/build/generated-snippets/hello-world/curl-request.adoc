@@ -1,0 +1,6 @@
+[source,bash]
+----
+$ curl 'https://jojoldu.tistory.com/hello?name=jojoldu' -i -X GET \
+    -H 'Accept: application/json, application/javascript, text/javascript' \
+    -H 'Content-Type: application/json; charset=UTF-8'
+----
