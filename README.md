@@ -114,15 +114,11 @@ asciidoctor {
     dependsOn test
 }
 
-task copyDocument(type: Copy) {
-    dependsOn asciidoctor
-
-    from file("build/asciidoc/html5/")
-    into file("src/main/resources/static/docs")
-}
-
-build {
-    dependsOn copyDocument
+bootJar { // SpringBoot 1.5 이하일 경우 jar 
+	dependsOn asciidoctor 
+	from ("${asciidoctor.outputDir}/html5") { 
+		into 'static/docs'
+	}
 }
 
 dependencies {
